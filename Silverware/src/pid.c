@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include "pid.h"
 #include "util.h"
-#include "config.h"
 #include "led.h"
 #include "defines.h"
 #include "math.h"
@@ -65,62 +64,82 @@ float stickTransitionProfileB[3]  = { 0.3 , 0.3 , 0.0};           //keep values 
 //************************************PIDS****************************************
 
 
-//Origional 6mm Whoop Tune 615 19600kv - set filtering to WEAK_FILTERING 
-//                         ROLL       PITCH     YAW
-//float pidkp[PIDNUMBER] = {19.5e-2 , 19.5e-2  , 7.5e-1 }; 
-//float pidki[PIDNUMBER] = { 14e-1  , 15e-1 , 13e-1 };	
-//float pidkd[PIDNUMBER] = { 6.9e-1 , 6.9e-1  , 5.5e-1 };
-
-//6mm & 7mm Abduction Pids (Team Alienwhoop)- set filtering to WEAK_FILTERING for 6mm, and STRONG_FILTERING or VERY_STRONG_FILTERING for 7mm
+//6mm & 7mm Abduction Pids for whoops (Team Alienwhoop)- set filtering ALIENWHOOP_ZERO_FILTERING
 //                         ROLL       PITCH     YAW
 float pidkp[PIDNUMBER] = {21.5e-2 , 21.5e-2  , 10.5e-1 }; 
 float pidki[PIDNUMBER] = { 14e-1  , 15e-1 , 15e-1 };	
 float pidkd[PIDNUMBER] = { 7.4e-1 , 7.4e-1  , 5.5e-1 };
 
-//6mm AwesomeSauce 20000kv Pids (Team Alienwhoop) - set filtering to WEAK_FILTERING
+
+//BOSS 7 with 716 motors and 46mm Props - set filtering to BETA_FILTERING and adjust pass 1 and pass 2 for KALMAN_GYRO both to 70hz, set DTERM_LPF_2ND_HZ to 120hz, disable motor filtering
+//                                        set TORQUE_BOOST to 1.0, and add #define THROTTLE_TRANSIENT_COMPENSATION and #define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 4.0
+//                         ROLL       PITCH     YAW
+//float pidkp[PIDNUMBER] = { 19.5e-2 , 19.5e-2  , 9.5e-1 }; 
+//float pidki[PIDNUMBER] = { 12e-1  , 12e-1 , 8e-1 };	
+//float pidkd[PIDNUMBER] = {10.7e-1 , 10.7e-1  , 2.0e-1 };	
+
+
+
+//***************  The following tunes beyond this point are all pretty dated.  I have not built/flown/tuned any of these in a long time and there have been alot of changes.
+//***************  If your build best matches some of the specs below ... consider the tune a starting point and give me feedback/adjust as necessary.
+
+// (OLD) 6mm experimental AwesomeSauce 20000kv Pids (Team Alienwhoop) - set filtering ALIENWHOOP_ZERO_FILTERING
 //                         ROLL       PITCH     YAW
 //float pidkp[PIDNUMBER] = { 25.5e-2 , 25.5e-2  , 11.5e-1 }; 
 //float pidki[PIDNUMBER] = { 20.5e-1  , 20.5e-1 , 16e-1 };	
 //float pidkd[PIDNUMBER] = { 11.4e-1 , 11.4e-1  , 4.9e-1 };	
 
-//BOSS 6 & 7 - 615 and 716 motors, hm830 46mm props  - set filtering to VERY_STRONG_FILTERING
+// (OLD) BOSS 6 & 7 - 615 and 716 motors, hm830 46mm props  - set filtering to VERY_STRONG_FILTERING
 //                         ROLL       PITCH     YAW
 //float pidkp[PIDNUMBER] = { 24.5e-2 , 24.5e-2  , 9.5e-1 }; 
 //float pidki[PIDNUMBER] = { 12e-1  , 12e-1 , 8e-1 };	
 //float pidkd[PIDNUMBER] = {14.1e-1 , 14.1e-1  , 7e-1 };
-
-//(EXPERIMENTAL) BOSS 7 with TORQUE_BOOST at 2.0 - set filtering to VERY_STRONG_FILTERING
-//                         ROLL       PITCH     YAW
-//float pidkp[PIDNUMBER] = { 22.7e-2 , 22.7e-2  , 9.5e-1 }; 
-//float pidki[PIDNUMBER] = { 12e-1  , 12e-1 , 8e-1 };	
-//float pidkd[PIDNUMBER] = {8.7e-1 , 8.7e-1  , 0e-1 };	
-
-//BOSS 8.0 - 816 motors, kingkong 66mm props  - set filtering to WEAK_FILTERING
+// (OLD) BOSS 8.0 - 816 motors, kingkong 66mm props  - set filtering to WEAK_FILTERING
 //                         ROLL       PITCH     YAW
 //float pidkp[PIDNUMBER] = { 26.7e-2 , 26.7e-2  , 9.5e-1 }; 
 //float pidki[PIDNUMBER] = { 12e-1  , 12e-1 , 8e-1 };	
 //float pidkd[PIDNUMBER] = {16.2e-1 , 16.2e-1  , 7e-1 };	
 
-//BOSS 8.5 - 820 motors, kingkong 66mm props  - set filtering to STRONG_FILTERING
+// (OLD) BOSS 8.5 - 820 motors, kingkong 66mm props  - set filtering to STRONG_FILTERING
 //                         ROLL       PITCH     YAW
 //float pidkp[PIDNUMBER] = { 29.5e-2 , 29.5e-2  , 11.5e-1 }; 
 //float pidki[PIDNUMBER] = { 12e-1  , 12e-1 , 12.0e-1 };	
 //float pidkd[PIDNUMBER] = {17.5e-1 , 17.5e-1  , 7e-1 };
 
 
-//************************************Setpoint Weight****************************************
-// "setpoint weighting" 0.0 - 1.0 where 1.0 = normal pid
-#define ENABLE_SETPOINT_WEIGHTING
-//            Roll   Pitch   Yaw
-//float b[3] = { 0.97 , 0.98 , 0.95};   //RACE
-float b[3] = { 0.93 , 0.93 , 0.9};      //FREESTYLE
+//*********************************Saved Initial PIDs****************************************
+float pidkp_init[PIDNUMBER] = { 0, 0, 0 };
+float pidki_init[PIDNUMBER] = { 0, 0, 0 };
+float pidkd_init[PIDNUMBER] = { 0, 0, 0 };
 
-/// output limit			
-const float outlimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
 
-// limit of integral term (abs)
-const float integrallimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+//************************************Setpoint Weight & Limits********************************
+#ifdef BRUSHLESS_TARGET
 
+	/// output limit	
+	const float outlimit[PIDNUMBER] = { 0.8 , 0.8 , 0.4 };
+
+	// limit of integral term (abs)
+	const float integrallimit[PIDNUMBER] = { 0.8 , 0.8 , 0.4 };
+
+#else  //BRUSHED TARGET
+
+	// "p term setpoint weighting" 0.0 - 1.0 where 1.0 = normal pid
+	#define ENABLE_SETPOINT_WEIGHTING
+	//            Roll   Pitch   Yaw
+	//float b[3] = { 0.97 , 0.98 , 0.95};   //BRUSHED RACE
+	float b[3] = { 0.93 , 0.93 , 0.9};      //BRUSHED FREESTYLE
+
+	/// output limit	
+	const float outlimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+
+	// limit of integral term (abs)
+	const float integrallimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+	
+#endif
+	
+	
+	
 //#define RECTANGULAR_RULE_INTEGRAL
 //#define MIDPOINT_RULE_INTEGRAL
 #define SIMPSON_RULE_INTEGRAL
@@ -140,6 +159,10 @@ float setpoint[PIDNUMBER];
 static float lasterror[PIDNUMBER];
 float v_compensation = 1.00;
 
+#ifdef ANALOG_AUX_PIDS
+int analog_aux_pids_adjusted = 0;
+#endif
+
 extern float error[PIDNUMBER];
 extern float setpoint[PIDNUMBER];
 extern float looptime;
@@ -148,6 +171,8 @@ extern int onground;
 extern float looptime;
 extern int in_air;
 extern char aux[AUXNUMBER];
+extern float aux_analog[AUXNUMBER];
+extern char aux_analogchange[AUXNUMBER];
 extern float vbattfilt;
 
 
@@ -161,6 +186,108 @@ static float lasterror2[PIDNUMBER];
 
 float timefactor;
 
+void apply_analog_aux_to_pids()
+{
+    // aux_analog channels are in range 0 to 1. Shift to 0 to 2 so we can zero out or double selected PID value.
+    // only needs to perform multiplies when the channel in question has changed
+    // only performance hit, then, is the true/false check on each enabled channel and the call to this function each pid loop
+
+    // Roll PIDs
+#ifdef ANALOG_R_P
+    if (aux_analogchange[ANALOG_R_P]) {
+        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_R_P] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_R_I
+    if (aux_analogchange[ANALOG_R_I]) {
+        pidki[0] = pidki_init[0] * (aux_analog[ANALOG_R_I] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_R_D
+    if (aux_analogchange[ANALOG_R_D]) {
+        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_R_D] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+
+    // Pitch PIDs
+#ifdef ANALOG_P_P
+    if (aux_analogchange[ANALOG_P_P]) {
+        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_P_P] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_P_I
+    if (aux_analogchange[ANALOG_P_I]) {
+        pidki[1] = pidki_init[1] * (aux_analog[ANALOG_P_I] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_P_D
+    if (aux_analogchange[ANALOG_P_D]) {
+        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_P_D] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+
+    // Yaw PIDs
+#ifdef ANALOG_Y_P
+    if (aux_analogchange[ANALOG_Y_P]) {
+        pidkp[2] = pidkp_init[2] * (aux_analog[ANALOG_Y_P] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_Y_I
+    if (aux_analogchange[ANALOG_Y_I]) {
+        pidki[2] = pidki_init[2] * (aux_analog[ANALOG_Y_I] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_Y_D
+    if (aux_analogchange[ANALOG_Y_D]) {
+        pidkd[2] = pidkd_init[2] * (aux_analog[ANALOG_Y_D] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+
+    // Combined Roll and Pitch PIDs
+#ifdef ANALOG_RP_P
+    if (aux_analogchange[ANALOG_RP_P]) {
+        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_P] + 0.5f);
+        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_P] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_RP_I
+    if (aux_analogchange[ANALOG_RP_I]) {
+        pidki[0] = pidki_init[0] * (aux_analog[ANALOG_RP_I] + 0.5f);
+        pidki[1] = pidki_init[1] * (aux_analog[ANALOG_RP_I] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+#ifdef ANALOG_RP_D
+    if (aux_analogchange[ANALOG_RP_D]) {
+        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_D] + 0.5f);
+        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_D] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+
+    // Combined Roll and Pitch P and D
+#ifdef ANALOG_RP_PD
+    if (aux_analogchange[ANALOG_RP_PD]) {
+        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        analog_aux_pids_adjusted = 1;
+    }
+#endif
+}
+
+
 // pid calculation for acro ( rate ) mode
 // input: error[x] = setpoint - gyro
 // output: pidoutput[x] = change required from motors
@@ -172,6 +299,11 @@ float pid(int x )
 		}else{
 			  if (onground) ierror[x] *= 0.98f;
 		}
+
+// pid tuning via analog aux channels
+#ifdef ANALOG_AUX_PIDS
+    apply_analog_aux_to_pids();
+#endif
 		
 #ifdef TRANSIENT_WINDUP_PROTECTION
     static float avgSetpoint[3];
@@ -343,13 +475,31 @@ void pid_precalc()
 	timefactor = 0.0032f / looptime;
 	
 #ifdef PID_VOLTAGE_COMPENSATION
-	v_compensation = mapf ( vbattfilt , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
+	extern float lipo_cell_count;
+	v_compensation = mapf ( (vbattfilt/lipo_cell_count) , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
 	if( v_compensation > PID_VC_FACTOR) v_compensation = PID_VC_FACTOR;
 	if( v_compensation < 1.00f) v_compensation = 1.00;
 	#ifdef LEVELMODE_PID_ATTENUATION
 	if (aux[LEVELMODE]) v_compensation *= LEVELMODE_PID_ATTENUATION;
 	#endif
 #endif
+}
+
+// call at quad startup, and when wanting to save pids
+void pid_init()
+{
+  // save initial PID values
+  pidkp_init[0] = pidkp[0]; // Roll
+  pidkp_init[1] = pidkp[1]; // Pitch
+  pidkp_init[2] = pidkp[2]; // Yaw
+  
+  pidki_init[0] = pidki[0];
+  pidki_init[1] = pidki[1];
+  pidki_init[2] = pidki[2];
+  
+  pidkd_init[0] = pidkd[0];
+  pidkd_init[1] = pidkd[1];
+  pidkd_init[2] = pidkd[2];
 }
 
 
