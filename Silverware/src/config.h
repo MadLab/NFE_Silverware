@@ -56,7 +56,7 @@
 
 
 // *************max angle for level mode
-#define LEVEL_MAX_ANGLE 65.0f
+#define LEVEL_MAX_ANGLE 72.0f
 
 // ************* low rates multiplier if rates are assigned to a channel
 #define LOW_RATES_MULTI 0.5f
