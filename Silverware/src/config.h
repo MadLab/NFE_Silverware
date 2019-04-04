@@ -137,7 +137,7 @@
 
 // ************* Raises pids automatically as battery voltage drops in flight.  Ensure voltage is calibrated before use.
 #define PID_VOLTAGE_COMPENSATION
-#define LEVELMODE_PID_ATTENUATION 0.90f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
+#define LEVELMODE_PID_ATTENUATION 0.99f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
 
 // *************lower throttle when battery below threshold - forced landing low voltage cutoff
 // *************THIS FEATURE WILL BE OFF BY DEFAULT EVEN WHEN DEFINED - USE STICK GESTURE LEFT-LEFT-LEFT TO ACTIVATE THEN DOWN-DOWN-DOWN TO SAVE AS ON
