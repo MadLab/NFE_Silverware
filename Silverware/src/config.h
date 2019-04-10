@@ -250,8 +250,8 @@
 //#define TORQUE_BOOST 1.0
 
 // *************makes throttle feel more poppy - can intensify small throttle imbalances visible in FPV if factor is set too high
-//#define THROTTLE_TRANSIENT_COMPENSATION 
-//#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 4.0 
+#define THROTTLE_TRANSIENT_COMPENSATION 
+#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 4.0 
  
 // *************throttle angle compensation in level mode
 //#define AUTO_THROTTLE
