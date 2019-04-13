@@ -260,6 +260,14 @@
 // *************mix increase throttle increases the authority of the pid controller at lowest throttle values like airmode when combined with idle up
 // *************mix3 has a stronger effect and works better with brushless
 
+//#define MIX_LOWER_THROTTLE
+#define MIX_THROTTLE_REDUCTION_PERCENT 1
+#define MIX_INCREASE_THROTTLE
+
+//#define MIX_LOWER_THROTTLE_3
+#define MIX_INCREASE_THROTTLE_3
+#define MIX_THROTTLE_INCREASE_MAX 0.2f
+
 
 //**************joelucid's yaw fix
 #define YAW_FIX
