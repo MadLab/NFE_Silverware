@@ -1,4 +1,5 @@
 
+#include "config.h"
 #include "defines.h"
 
 #ifndef GYRO_FILTER_PASS1

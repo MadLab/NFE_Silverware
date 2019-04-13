@@ -26,8 +26,9 @@ THE SOFTWARE.
 #include "project.h"
 #include <stdint.h>
 #include <stdio.h>
+
 #include "drv_softi2c.h"
-#include "defines.h"
+#include "config.h"
 
 
 //#define i2cdebug

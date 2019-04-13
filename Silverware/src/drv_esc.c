@@ -1,7 +1,7 @@
 
 #include "project.h"
 #include "drv_pwm.h"
-#include "defines.h"
+#include "config.h"
 #include "drv_time.h"
 
 #ifdef USE_ESC_DRIVER

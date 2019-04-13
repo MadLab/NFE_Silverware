@@ -17,7 +17,7 @@
 */
 #pragma once
 
-#include "defines.h"
+#include "config.h"
 
 
 #ifdef USE_SERIAL_4WAY_BLHELI_INTERFACE

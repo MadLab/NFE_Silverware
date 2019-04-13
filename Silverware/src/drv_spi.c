@@ -3,7 +3,7 @@
 #include "project.h"
 #include "drv_spi.h"
 #include "binary.h"
-#include "defines.h"
+#include "config.h"
 
 #ifdef SOFTSPI_4WIRE
 

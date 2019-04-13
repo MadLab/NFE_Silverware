@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "project.h"
 #include "drv_time.h"
 #include "led.h"
-#include "defines.h"
+#include "config.h"
 
 #define LEDALL 15
 

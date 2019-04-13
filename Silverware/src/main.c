@@ -28,13 +28,14 @@ THE SOFTWARE.
 
 
 #include "project.h"
-#include "defines.h"
+
 #include "led.h"
 #include "util.h"
 #include "sixaxis.h"
 #include "drv_adc.h"
 #include "drv_time.h"
 #include "drv_softi2c.h"
+#include "config.h"
 #include "drv_pwm.h"
 #include "drv_adc.h"
 #include "drv_gpio.h"
@@ -43,6 +44,7 @@ THE SOFTWARE.
 #include "drv_spi.h"
 #include "control.h"
 #include "pid.h"
+#include "defines.h"
 #include "drv_i2c.h"
 #include "drv_softi2c.h"
 #include "drv_serial.h"
@@ -108,11 +110,6 @@ char aux[AUXNUMBER] = { 0 ,0 ,0 , 0 , 0 , 0};
 char lastaux[AUXNUMBER];
 // if an aux channel has just changed
 char auxchange[AUXNUMBER];
-// analog version of each aux channel
-float aux_analog[AUXNUMBER];
-float lastaux_analog[AUXNUMBER];
-// if an analog aux channel has just changed
-char aux_analogchange[AUXNUMBER];
 
 // bind / normal rx mode
 extern int rxmode;
@@ -124,7 +121,6 @@ int in_air;
 int armed_state;
 int arming_release;
 int binding_while_armed = 1;
-float lipo_cell_count = 1;
 
 //Experimental Flash Memory Feature
 int flash_feature_1 = 0;
@@ -207,48 +203,30 @@ aux[CH_AUX1] = 1;
 #endif
 
 
-#ifdef USE_ANALOG_AUX
-  // saves initial pid values - after flash loading
-  pid_init();
-#endif
-
-
+	
 	rx_init();
 
 	
 int count = 0;
 	
-while ( count < 5000 )
+while ( count < 64 )
 {
-	float bootadc = adc_read(0)*vreffilt;
-	lpf ( &vreffilt , adc_read(1)  , 0.9968f);
-	lpf ( &vbattfilt , bootadc , 0.9968f);
+	vbattfilt += adc_read(0);
+	delay(1000);
 	count++;
 }
-
-#ifndef LIPO_CELL_COUNT
-for ( int i = 6 ; i > 0 ; i--)
-{
-		float cells = i;
-		if (vbattfilt/cells > 3.7f)
-		{	
-			lipo_cell_count = cells;
-			break;
-		}
-}
-#else
-		lipo_cell_count = (float)LIPO_CELL_COUNT;
-#endif
-	
 #ifdef RX_BAYANG_BLE_APP
    // for randomising MAC adddress of ble app - this will make the int = raw float value        
     random_seed =  *(int *)&vbattfilt ; 
     random_seed = random_seed&0xff;
 #endif
+ vbattfilt = vbattfilt/64;	
+// startvref = startvref/64;
+
 	
 #ifdef STOP_LOWBATTERY
 // infinite loop
-if ( vbattfilt/lipo_cell_count < 3.3f) failloop(2);
+if ( vbattfilt < (float) 3.3f) failloop(2);
 #endif
 
 
@@ -348,7 +326,7 @@ if ( liberror )
 		// ( or they can use a single filter)		
 		lpf ( &thrfilt , thrsum , 0.9968f);	// 0.5 sec at 1.6ms loop time	
 
-        float vbattfilt_corr = 4.2f * lipo_cell_count;
+        static float vbattfilt_corr = 4.2;
         // li-ion battery model compensation time decay ( 18 seconds )
         lpf ( &vbattfilt_corr , vbattfilt , FILTERCALC( 1000 , 18000e3) );
 	

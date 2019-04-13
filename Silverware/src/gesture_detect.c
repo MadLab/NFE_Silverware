@@ -2,7 +2,7 @@
 #include <math.h>
 #include "drv_time.h"
 #include "gestures.h"
-#include "defines.h"
+#include "config.h"
 
 #define STICKMAX 0.7f
 #define STICKCENTER 0.2f

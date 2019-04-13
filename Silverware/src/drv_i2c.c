@@ -26,10 +26,12 @@ THE SOFTWARE.
 
 #include "project.h"
 
+
 #include "drv_i2c.h"
 #include "drv_softi2c.h"
 #include "drv_hw_i2c.h"
-#include "defines.h"
+
+#include "config.h"
 
 #ifndef USE_HARDWARE_I2C
 #ifndef USE_SOFTWARE_I2C

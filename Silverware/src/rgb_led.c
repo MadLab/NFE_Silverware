@@ -1,4 +1,4 @@
-#include "defines.h"
+#include "config.h"
 #include "drv_time.h"
 #include "util.h"
 #include <math.h>

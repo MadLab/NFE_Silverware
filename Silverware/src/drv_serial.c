@@ -3,7 +3,7 @@
 #include "stm32f0xx_usart.h"
 #include <stdio.h>
 #include "drv_serial.h"
-#include "defines.h"
+#include "config.h"
 
 
 // enable serial driver ( pin SWCLK after calibration) 

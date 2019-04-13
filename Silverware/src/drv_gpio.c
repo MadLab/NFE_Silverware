@@ -1,6 +1,6 @@
 #include "project.h"
 #include "drv_gpio.h"
-#include "defines.h"
+#include "config.h"
 
 void gpio_init(void)
 {

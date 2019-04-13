@@ -1,6 +1,6 @@
 #include "drv_spi.h"
 #include "project.h"
-#include "defines.h"
+#include "config.h"
 
 #ifdef SOFTSPI_NONE
 // spi disabled (for pin setting)

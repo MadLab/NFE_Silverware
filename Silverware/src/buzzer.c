@@ -1,5 +1,6 @@
 
 #include "project.h"
+#include "config.h"
 #include "drv_time.h"
 #include "buzzer.h"
 #include "defines.h"
