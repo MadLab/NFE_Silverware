@@ -28,7 +28,7 @@
 // *************rate in deg/sec
 // *************for acro mode
 #define MAX_RATE 860.0          //Roll & Pitch axis
-#define MAX_RATEYAW 500.0       //Yaw axis (used in acro and leveling modes)
+#define MAX_RATEYAW 640.0       //Yaw axis (used in acro and leveling modes)
 
 // *************EXPO from 0.00 to 1.00 , 0 = no exp
 // *************positive = less sensitive near center 
@@ -251,7 +251,7 @@
 
 // *************makes throttle feel more poppy - can intensify small throttle imbalances visible in FPV if factor is set too high
 #define THROTTLE_TRANSIENT_COMPENSATION 
-#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 5.0 
+#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 4.0 
  
 // *************throttle angle compensation in level mode
 #define AUTO_THROTTLE
