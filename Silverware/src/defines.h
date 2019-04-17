@@ -274,7 +274,7 @@
 
 // *************rate in deg/sec 
 // *************for angle mode
-#define LEVEL_MAX_RATE 230.0    //Roll & Pitch axis          //todo*********this feature is useless - evaluate and repair
+#define LEVEL_MAX_RATE 300.0    //Roll & Pitch axis          //todo*********this feature is useless - evaluate and repair
 
 // *************compensation for battery voltage vs throttle drop
 #define VDROP_FACTOR 0.7
