@@ -28,7 +28,7 @@
 // *************rate in deg/sec
 // *************for acro mode
 #define MAX_RATE 860.0          //Roll & Pitch axis
-#define MAX_RATEYAW 666.0       //Yaw axis (used in acro and leveling modes)
+#define MAX_RATEYAW 640.0       //Yaw axis (used in acro and leveling modes)
 
 // *************EXPO from 0.00 to 1.00 , 0 = no exp
 // *************positive = less sensitive near center 
@@ -47,7 +47,7 @@
 #define BF_RC_RATE_YAW 1.00
 #define BF_SUPER_RATE_ROLL 0.86
 #define BF_SUPER_RATE_PITCH 0.86
-#define BF_SUPER_RATE_YAW 0.70
+#define BF_SUPER_RATE_YAW 0.69
 #define BF_EXPO_ROLL 0.30
 #define BF_EXPO_PITCH 0.30
 #define BF_EXPO_YAW 0.00
@@ -59,11 +59,11 @@
 #define LEVEL_MAX_ANGLE 71.0f
 
 // ************* low rates multiplier if rates are assigned to a channel
-#define LOW_RATES_MULTI 1.0f
+#define LOW_RATES_MULTI 0.5f
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
 // *************.01f = 1% of stick range - comment out to disable
-#define STICKS_DEADBAND .02f
+#define STICKS_DEADBAND .01f
 
 
 
@@ -203,8 +203,8 @@
 //#define WEAK_FILTERING
 //#define STRONG_FILTERING
 //#define VERY_STRONG_FILTERING
-#define ALIENWHOOP_ZERO_FILTERING
-//#define BETA_FILTERING
+//#define ALIENWHOOP_ZERO_FILTERING
+#define BETA_FILTERING
 
 #ifdef BETA_FILTERING  //*** ABOVE 100 ADJUST IN INCRIMENTS OF 20, BELOW 100 ADJUST IN INCRIMENTS OF 10, nothing coded beyond 500hz
 
