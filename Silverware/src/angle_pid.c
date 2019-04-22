@@ -19,8 +19,8 @@ float apidkp1[APIDNUMBER] = { 5.00 };  // P TERM GAIN ROLL + PITCH
 float apidkd1[APIDNUMBER] = { 0.0 };    // D TERM GAIN ROLL + PITCH
 
 // Leveling algorithm coefficients for large errors  (stick banging or collisions)
-float apidkp2[APIDNUMBER] = { 4.75 };   // P TERM GAIN ROLL + PITCH 
-float apidkd2[APIDNUMBER] = { 0.5 };    // D TERM GAIN ROLL + PITCH
+float apidkp2[APIDNUMBER] = { 4.5 };   // P TERM GAIN ROLL + PITCH 
+float apidkd2[APIDNUMBER] = { 0.0 };    // D TERM GAIN ROLL + PITCH
 
 
 
