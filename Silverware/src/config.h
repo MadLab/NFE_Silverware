@@ -239,7 +239,7 @@
 #define PWMFREQ 32000
 
 // *************clip feedforward attempts to resolve issues that occur near full throttle by adding any clipped motor commands to the next loop output
-//#define CLIP_FF
+#define CLIP_FF
 
 // *************torque boost is a highly eperimental feature.  it is a lpf D term on motor outputs that will accelerate the response
 // *************of the motors when the command to the motors is changing by increasing or decreasing the voltage thats sent.  It differs
@@ -251,7 +251,7 @@
 
 // *************makes throttle feel more poppy - can intensify small throttle imbalances visible in FPV if factor is set too high
 #define THROTTLE_TRANSIENT_COMPENSATION 
-#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 4.0 
+#define THROTTLE_TRANSIENT_COMPENSATION_FACTOR 10.0 
  
 // *************throttle angle compensation in level mode
 #define AUTO_THROTTLE
