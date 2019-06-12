@@ -59,7 +59,7 @@
 #define LEVEL_MAX_ANGLE 71.0f
 
 // ************* low rates multiplier if rates are assigned to a channel
-#define LOW_RATES_MULTI 0.5f
+#define LOW_RATES_MULTI 1.0f
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
 // *************.01f = 1% of stick range - comment out to disable
