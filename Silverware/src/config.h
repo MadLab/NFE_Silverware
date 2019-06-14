@@ -49,10 +49,20 @@
 #define BF_RC_RATE_YAW 1.00
 #define BF_SUPER_RATE_ROLL 0.86
 #define BF_SUPER_RATE_PITCH 0.86
-#define BF_SUPER_RATE_YAW 0.64
+#define BF_SUPER_RATE_YAW 0.68
 #define BF_EXPO_ROLL 0.30
 #define BF_EXPO_PITCH 0.30
 #define BF_EXPO_YAW 0.00
+
+#define BF_RC_RATE_ROLL_2 1.00
+#define BF_RC_RATE_PITCH_2 1.00
+#define BF_RC_RATE_YAW_2 1.00
+#define BF_SUPER_RATE_ROLL_2 0.64
+#define BF_SUPER_RATE_PITCH_2 0.64
+#define BF_SUPER_RATE_YAW_2 0.64
+#define BF_EXPO_ROLL_2 0.00
+#define BF_EXPO_PITCH_2 0.00
+#define BF_EXPO_YAW_2 0.00
 #endif
 
 
@@ -60,7 +70,7 @@
 // *************max angle for level mode
 #define LEVEL_MAX_ANGLE 71.0f
 
-// ************* low rates multiplier if rates are assigned to a channel
+// ************* low rates multiplier if rates are assigned to a channel (not used with betaflight rates)
 #define LOW_RATES_MULTI 1.0f
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
@@ -105,10 +115,10 @@
 #define ARMING CHAN_5
 #define IDLE_UP CHAN_5
 #define LEVELMODE CHAN_6
-#define RACEMODE  CHAN_7
+#define RACEMODE  CHAN_OFF
 #define HORIZON   CHAN_OFF
 #define PIDPROFILE CHAN_8                //For switching stickAccelerator & stickTransition profiles on pid.c page
-#define RATES CHAN_ON
+#define RATES CHAN_7
 #define LEDS_ON CHAN_ON
 
 // *************switch for fpv / other, requires fet
