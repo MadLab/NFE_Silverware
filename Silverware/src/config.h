@@ -47,8 +47,8 @@
 #define BF_RC_RATE_ROLL 1.00
 #define BF_RC_RATE_PITCH 1.00
 #define BF_RC_RATE_YAW 1.00
-#define BF_SUPER_RATE_ROLL 0.86
-#define BF_SUPER_RATE_PITCH 0.86
+#define BF_SUPER_RATE_ROLL 0.78
+#define BF_SUPER_RATE_PITCH 0.78
 #define BF_SUPER_RATE_YAW 0.66
 #define BF_EXPO_ROLL 0.30
 #define BF_EXPO_PITCH 0.30
@@ -65,7 +65,9 @@
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
 // *************.01f = 1% of stick range - comment out to disable
-#define STICKS_DEADBAND .02f
+#define STICKS_DEADBAND .01f
+
+
 
 
 //**********************************************************************************************************************
