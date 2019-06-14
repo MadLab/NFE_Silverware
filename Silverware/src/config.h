@@ -104,11 +104,11 @@
 #define IDLE_UP CHAN_5
 #define IDLE_THR 0.05f                   //This designates an idle throttle of 5%
 #define LEVELMODE CHAN_6
-#define RACEMODE  CHAN_OFF
+#define RACEMODE  CHAN_7
 #define HORIZON   CHAN_OFF
 #define PIDPROFILE CHAN_8                //For switching stickAccelerator & stickTransition profiles on pid.c page
 #define RATES CHAN_ON
-#define LEDS_ON CHAN_10
+#define LEDS_ON CHAN_ON
 
 // *************switch for fpv / other, requires fet
 // *************comment out to disable
