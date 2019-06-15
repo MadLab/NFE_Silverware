@@ -119,14 +119,14 @@ static float calcBFRatesRad(int axis)
 {
     float rcRate, superExpo;
     if (axis == ROLL) {
-        rcRate = (float) ( aux[RATES] ) ? BF_RC_RATE_ROLL : BF_RC_RATE_ROLL_2;
-			superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_ROLL : BF_SUPER_RATE_ROLL_2;
+        rcRate = (float) BF_RC_RATE_ROLL;
+        superExpo = (float) BF_SUPER_RATE_ROLL;
     } else if (axis == PITCH) {
-			rcRate = (float) ( aux[RATES] ) ? BF_RC_RATE_PITCH : BF_RC_RATE_PITCH_2;
-			superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_PITCH : BF_SUPER_RATE_PITCH_2;
+        rcRate = (float) BF_RC_RATE_PITCH;
+        superExpo = (float) BF_SUPER_RATE_PITCH;
 	} else {
-		rcRate = (float) ( aux[RATES] ) ? BF_RC_RATE_YAW : BF_RC_RATE_YAW_2;
-		superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_YAW : BF_RC_RATE_YAW_2;
+        rcRate = (float) BF_RC_RATE_YAW;
+        superExpo = (float) BF_SUPER_RATE_YAW;
     }
     if (rcRate > 2.0f) {
         rcRate += RC_RATE_INCREMENTAL * (rcRate - 2.0f);
@@ -221,10 +221,9 @@ pid_precalc();
     rates[1] = rate_multiplier * rxcopy[1] * (float) MAX_RATE * DEGTORAD;
     rates[2] = rate_multiplier * rxcopy[2] * (float) MAX_RATEYAW * DEGTORAD;
 #else
-		rate_multiplier = rate_multiplier; // just an ugly hack to remove warnings that this var is not being used when betaflight rates are defined
-    rates[0] = calcBFRatesRad(0);
-    rates[1] = calcBFRatesRad(1);
-    rates[2] = calcBFRatesRad(2);
+    rates[0] = rate_multiplier * calcBFRatesRad(0);
+    rates[1] = rate_multiplier * calcBFRatesRad(1);
+    rates[2] = rate_multiplier * calcBFRatesRad(2);
 #endif
         
 if (aux[LEVELMODE]&&!acro_override){
