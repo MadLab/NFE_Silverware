@@ -126,7 +126,7 @@ static float calcBFRatesRad(int axis)
 			superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_PITCH : BF_SUPER_RATE_PITCH_2;
 	} else {
 		rcRate = (float) ( aux[RATES] ) ? BF_RC_RATE_YAW : BF_RC_RATE_YAW_2;
-		superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_YAW : BF_SUPER_RATE_YAW_2;
+		superExpo = (float) ( aux[RATES] ) ? BF_SUPER_RATE_YAW : BF_RC_RATE_YAW_2;
     }
     if (rcRate > 2.0f) {
         rcRate += RC_RATE_INCREMENTAL * (rcRate - 2.0f);
