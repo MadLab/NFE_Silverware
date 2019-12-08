@@ -65,7 +65,7 @@
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
 // *************.01f = 1% of stick range - comment out to disable
-#define STICKS_DEADBAND .01f
+#define STICKS_DEADBAND .02f
 
 
 
